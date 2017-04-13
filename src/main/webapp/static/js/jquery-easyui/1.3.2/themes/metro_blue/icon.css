@@ -1,0 +1,46 @@
+.icon-ok{
+	background:url('icons/ok.png') no-repeat center center;
+}
+.icon-close{
+	background:url('icons/close.png') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/add.png') no-repeat center center;
+}
+.icon-edit{
+	background:url('icons/edit.png') no-repeat center center;
+}
+.icon-delete{
+	background:url('icons/delete.png') no-repeat center center;
+}
+.icon-set{
+	background:url('icons/set.png') no-repeat center center;
+}
+
+/** extend icons begin */
+.icon-sort{
+	background:url('icons/sort.png') no-repeat center center;
+}
+
+.icon-up{
+	background:url('icons/arrow_up.png') no-repeat center center;
+}
+.icon-down{
+	background:url('icons/arrow_down.png') no-repeat center center;
+}
+.icon-top{
+	background:url('icons/arrow_top.png') no-repeat center center;
+}
+.icon-bottom{
+	background:url('icons/arrow_bottom.png') no-repeat center center;
+}
+.icon-users{
+	background:url('icons/users.png') no-repeat center center;
+}
+.icon-user-add{
+	background:url('icons/user-add.png') no-repeat center center;
+}
+.icon-user-delete{
+	background:url('icons/user-delete.png') no-repeat center center;
+}
+/** extend icons end */

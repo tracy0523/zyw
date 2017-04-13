@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ycxy.modules.mapper.UserMapper">
+	
+	<resultMap id="BaseResultMap"
+		type="cn.ycxy.modules.entity.User">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<collection property="product" javaType="ArrayList" ofType="cn.ycxy.modules.entity.Product" column="id" select="cn.ycxy.modules.mapper.ProductMapper.selectProductByUserId">
+		</collection>
+		<collection property="role" javaType="ArrayList" ofType="cn.ycxy.modules.entity.Role" column="id" select="cn.ycxy.modules.mapper.RoleMapper.selectRoleByUserId">
+		</collection>
+	</resultMap>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select 
+			id, name,pwd,account,phone,status,type,email  
+		from
+		    user
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select 
+			id, name,pwd,account,phone,status,type,email  
+		from
+		    user
+		where account = #{account,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="insert" parameterType="cn.ycxy.modules.entity.User">
+		insert into  
+			user(id,name,pwd,account,phone,status,type,email)
+		values(
+			#{id,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{pwd,jdbcType=VARCHAR},
+			#{account,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR},
+			#{status,jdbcType=INTEGER},
+			#{type,jdbcType=INTEGER},
+			#{email,jdbcType=VARCHAR}
+		)  
+	</insert>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		 	user
+		where 
+		   	id = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<update id="updateByPrimaryKey"
+		parameterType="cn.ycxy.modules.entity.User">
+		update user
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="account != null">
+				account = #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateByUserName"
+		parameterType="cn.ycxy.modules.entity.User">
+		update user
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where account = #{account,jdbcType=VARCHAR}
+	</update>
+</mapper>
+
+

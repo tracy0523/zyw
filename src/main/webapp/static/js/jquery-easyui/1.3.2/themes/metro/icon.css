@@ -1,0 +1,79 @@
+.icon-ok{
+	background:url('icons/ok.png') no-repeat center center;
+}
+.icon-close{
+	background:url('icons/close.png') no-repeat center center;
+}
+.icon-add{
+	background:url('icons/add.png') no-repeat center center;
+}
+.icon-edit{
+	background:url('icons/edit.png') no-repeat center center;
+}
+.icon-delete{
+	background:url('icons/delete.png') no-repeat center center;
+}
+.icon-set{
+	background:url('icons/set.png') no-repeat center center;
+}
+
+/** extend icons begin */
+.icon-sort{
+	background:url('icons/sort.png') no-repeat center center;
+}
+
+.icon-up{
+	background:url('icons/arrow_up.png') no-repeat center center;
+}
+.icon-down{
+	background:url('icons/arrow_down.png') no-repeat center center;
+}
+.icon-top{
+	background:url('icons/arrow_top.png') no-repeat center center;
+}
+.icon-bottom{
+	background:url('icons/arrow_bottom.png') no-repeat center center;
+}
+.icon-users{
+	background:url('icons/users.png') no-repeat center center;
+}
+.icon-user-add{
+	background:url('icons/user-add.png') no-repeat center center;
+}
+.icon-user-delete{
+	background:url('icons/user-delete.png') no-repeat center center;
+}
+.icon-check{
+	background:url('icons/check.png') no-repeat center center;
+}
+.icon-lock{
+	background:url('icons/lock.png') no-repeat center center;
+}
+.icon-unlock{
+	background:url('icons/unlock.png') no-repeat center center;
+}
+.icon-reset{
+	background:url('icons/reset.png') no-repeat center center;
+}
+.icon-list{
+	background:url('icons/list.png') no-repeat center center;
+}
+.icon-list-2{
+	background:url('icons/list-2.png') no-repeat center center;
+}
+.icon-list-3{
+	background:url('icons/list-3.png') no-repeat center center;
+}
+.icon-info{
+	background:url('icons/info.png') no-repeat center center;
+}
+.icon-list-point-9{
+	background:url('icons/list-point-9.png') no-repeat center center;
+}
+.icon-file-blue{
+	background:url('icons/file-blue.png') no-repeat center center;
+}
+.icon-file-black{
+	background:url('icons/file-black.png') no-repeat center center;
+}
+/** extend icons end */

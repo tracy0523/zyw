@@ -1,0 +1,89 @@
+ <beans:beans xmlns="http://www.springframework.org/schema/security"  
+  xmlns:beans="http://www.springframework.org/schema/beans"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+           http://www.springframework.org/schema/security  
+           http://www.springframework.org/schema/security/spring-security.xsd">  
+    <!--登录页面不过滤 -->  
+    <!-- 该路径下的资源不用过滤 -->
+	<http pattern="/static/**" security="none" />
+	<http pattern="/login" security="none" />
+	<http pattern="/register/**" security="none" />
+    <http>
+        <access-denied-handler error-page="/accessDenied" />  
+        <form-login login-page="/login" login-processing-url="/j_spring_security_check"  default-target-url="/account/index"
+                    password-parameter="j_password"  username-parameter="j_username" />
+         
+        <!--访问/admin.jsp资源的用户必须具有ROLE_ADMIN的权限 -->  
+        <!-- <intercept-url pattern="/admin.jsp" access="ROLE_ADMIN" />   -->
+        
+        <!--访问/**资源的用户必须具有ROLE_USER的权限 -->  
+        <!-- <intercept-url pattern="/**" access="ROLE_USER" /> --> 
+         
+        <!-- logout-url：指定了用于响应退出系统请求的URL。其默认值为：/j_spring_security_logout。 logout-success-url：退出系统后转向的URL。 
+			invalidate-session：指定在退出系统时是否要销毁Session。 -->
+		<logout invalidate-session="true" logout-success-url="/login"
+			logout-url="/logout" delete-cookies="JSESSIONID" />
+		<remember-me key="j_spring_security_rememberme"/>
+        <!-- max-sessions:允许用户帐号登录的次数。范例限制用户只能登录一次。 exception-if-maximum-exceeded: 
+			默认为false，此值表示：用户第二次登录时，前一次的登录信息都被清空。 当exception-if-maximum-exceeded="true"时系统会拒绝第二次登录。 -->
+		<session-management invalid-session-url="/login"
+			session-fixation-protection="none">
+			<concurrency-control max-sessions="1"
+				error-if-maximum-exceeded="false" expired-url="/login"/>
+		</session-management>
+		<session-management
+			session-authentication-strategy-ref="sas" />
+		 
+        <!--增加一个filter，这点与 Acegi是不一样的，不能修改默认的filter了， 这个filter位于FILTER_SECURITY_INTERCEPTOR之前 -->  
+        <custom-filter ref="myFilter" before="FILTER_SECURITY_INTERCEPTOR" />  
+        
+    </http> 
+     
+     <beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+		<beans:constructor-arg name="sessionRegistry"
+			ref="sessionRegistry" />
+		<beans:property name="maximumSessions" value="1" />
+		<!-- 同一个帐号 同时只能一个人登录 -->
+		<beans:property name="exceptionIfMaximumExceeded"
+			value="false" />
+	</beans:bean>
+	<beans:bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+		
+		
+	<!-- 事件监听:实现了 ApplicationListener监听接口，包括AuthenticationCredentialsNotFoundEvent 
+		事件， AuthorizationFailureEvent事件，AuthorizedEvent事件， PublicInvocationEvent事件 -->
+	<beans:bean
+		class="org.springframework.security.authentication.event.LoggerListener" />	
+		
+    <!--一个自定义的filter，必须包含 authenticationManager,accessDecisionManager,securityMetadataSource三个属性，   
+            我们的所有控制将在这三个类中实现，解释详见具体配置 -->  
+    <beans:bean id="myFilter"  
+        class="cn.ycxy.security.MyFilterSecurityInterceptor">  
+        <beans:property name="authenticationManager" ref="authenticationManager" />  
+        <beans:property name="accessDecisionManager" ref="myAccessDecisionManagerBean" />  
+        <beans:property name="securityMetadataSource" ref="securityMetadataSource" />  
+    </beans:bean>  
+    <!--验证配置，认证管理器，实现用户认证的入口，主要实现UserDetailsService接口即可 -->  
+    <authentication-manager alias="authenticationManager">  
+        <authentication-provider user-service-ref="myUserDetailService">  
+            <!--如果用户的密码采用加密的话 <password-encoder hash="md5" /> -->  
+            <password-encoder hash="md5" />
+        </authentication-provider>  
+    </authentication-manager>  
+    
+    <!--在这个类中，你就可以从数据库中读入用户的密码，角色信息，是否锁定，账号是否过期等 -->  
+    <beans:bean id="myUserDetailService" class="cn.ycxy.security.MyUserDetailService" />  
+    
+    <!--访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源 -->  
+    <beans:bean id="myAccessDecisionManagerBean"  
+        class="cn.ycxy.security.MyAccessDecisionManager">  
+    </beans:bean>  
+    
+    <!--资源源数据定义，将所有的资源和权限对应关系建立起来，即定义某一资源可以被哪些角色访问 -->  
+    <beans:bean id="securityMetadataSource"  
+        class="cn.ycxy.security.MyInvocationSecurityMetadataSource" />  
+</beans:beans>  
