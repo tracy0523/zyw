@@ -49,7 +49,7 @@ public class RegisterController extends BaseController{
 	
 	@RequestMapping(value = "/register")
 	@ResponseBody
-	public String register(User user) {
+	public String register(User user) {		
 		System.out.println(user);
 		user.setId(Identities.uuid());
 		user.setPwd(PasswordEncoderUtil.md5Encoder(user.getPwd()));
