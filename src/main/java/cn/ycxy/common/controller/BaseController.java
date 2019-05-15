@@ -23,6 +23,7 @@ public class BaseController {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
+		System.out.println("22222");
 		return userDetails;
 	}
 	
