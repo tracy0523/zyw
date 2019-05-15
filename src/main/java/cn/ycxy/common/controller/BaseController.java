@@ -20,6 +20,7 @@ public class BaseController {
 	 * @return User 用户信息对象
 	 */
 	protected UserDetails getUserInfo() {
+		System.out.println("1111111");
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
